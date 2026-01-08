@@ -1,0 +1,41 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Iinclude",
+      "-o",
+      "obj/file.o",
+      "src/file.c"
+    ],
+    "directory": "/home/carlhavoc/Workspace/lowlevel/flag_project",
+    "file": "/home/carlhavoc/Workspace/lowlevel/flag_project/src/file.c",
+    "output": "/home/carlhavoc/Workspace/lowlevel/flag_project/obj/file.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Iinclude",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/carlhavoc/Workspace/lowlevel/flag_project",
+    "file": "/home/carlhavoc/Workspace/lowlevel/flag_project/src/main.c",
+    "output": "/home/carlhavoc/Workspace/lowlevel/flag_project/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Iinclude",
+      "-o",
+      "obj/parse.o",
+      "src/parse.c"
+    ],
+    "directory": "/home/carlhavoc/Workspace/lowlevel/flag_project",
+    "file": "/home/carlhavoc/Workspace/lowlevel/flag_project/src/parse.c",
+    "output": "/home/carlhavoc/Workspace/lowlevel/flag_project/obj/parse.o"
+  }
+]
