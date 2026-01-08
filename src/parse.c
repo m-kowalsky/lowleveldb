@@ -117,9 +117,6 @@ int create_db_header(struct dbheader_t **headerOut) {
 
 
 void output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees) {
-
-	int bytes_written = 0;
-
 	if (fd < 0) {
 		printf("Passed wrong file descriptor to output_file\n");
 		return;
