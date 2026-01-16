@@ -22,5 +22,6 @@ int create_db_header(struct dbheader_t **headerOut);
 int validate_db_header(int fd, struct dbheader_t **headerOut);
 int read_employees(int fd, struct dbheader_t *, struct employee_t **employeesOut);
 int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees, char *addstring);
-void output_file(int fd, struct dbheader_t *, struct employee_t *);
+void output_file(int fd, struct dbheader_t *, struct employee_t *employees);
+int find_employee_by_name(struct dbheader_t *dbhdr, struct employee_t *employees, char *employee_name);
 #endif

@@ -10,6 +10,17 @@
 #include "parse.h"
 #include "common.h"
 
+int find_employee_by_name(struct dbheader_t *dbhdr, struct employee_t *employees, char *employee_name) {
+
+	for (int i = 0; i < dbhdr->count; i++) {
+		if (strncmp(employee_name, employees[i].name, sizeof(employees[i].name)) == 0) {
+			return i;
+		}
+	}
+	printf("Could not find emloyee %s in database.  Please list employees with -l argument to find exact name and try command again.\n", employee_name);
+	return STATUS_ERROR;
+}
+
 int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees, char *addstring) {
 	if (NULL == dbhdr) return STATUS_ERROR;
 	if (NULL == *employees) return STATUS_ERROR;
@@ -142,21 +153,26 @@ void output_file(int fd, struct dbheader_t *dbhdr, struct employee_t *employees)
 		printf("Passed wrong file descriptor to output_file\n");
 		return;
 	}
+	struct dbheader_t hdr_cpy = *dbhdr;
+
 	int realcount = dbhdr->count;
 
-	dbhdr->magic = htonl(dbhdr->magic);
-	dbhdr->filesize = htonl(sizeof(struct dbheader_t) + sizeof(struct employee_t) * realcount);
-	dbhdr->version = htons(dbhdr->version);
-	dbhdr->count = htons(dbhdr->count);
+	hdr_cpy.magic = htonl(hdr_cpy.magic);
+	hdr_cpy.filesize = htonl(sizeof(struct dbheader_t) + sizeof(struct employee_t) * realcount);
+	hdr_cpy.version = htons(hdr_cpy.version);
+	hdr_cpy.count = htons(hdr_cpy.count);
 
 	lseek(fd, 0, SEEK_SET);
 
-	write(fd, dbhdr, sizeof(struct dbheader_t));
+	write(fd, &hdr_cpy, sizeof(hdr_cpy));
 
 	for (int i = 0; i < realcount; i++) {
-		employees[i].hours = htonl(employees[i].hours);
-		write(fd, &employees[i], sizeof(struct employee_t));
+		struct employee_t tmp = employees[i];
+		tmp.hours = htonl(tmp.hours);
+		write(fd, &tmp, sizeof(tmp));
 	}
+	off_t new_size = sizeof(struct dbheader_t) + (sizeof(struct employee_t) * realcount);
+	ftruncate(fd, new_size);
 	return;
 
 }
